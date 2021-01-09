@@ -15,7 +15,7 @@ function stringifyQueryParams(queryObj) {
     Object.keys(queryObj).forEach((key) => {
         searchParams.set(key, queryObj[key]);
     });
-
+    console.log(searchParams.toString());
     return searchParams.toString();
 }
 
