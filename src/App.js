@@ -18,21 +18,6 @@ function getCheckboxValue()  {
   document.getElementById('result').innerText
     = result;
   console.log(result);
-}
-
-function getCheckboxResult()  {
-  // 선택된 목록 가져오기
-  const query = 'input[name="Section"]:checked';
-  const selectedEls = 
-      document.querySelectorAll(query);
-  
-  // 선택된 목록에서 value 찾기
-  let result = '';
-  selectedEls.forEach((el) => {
-    result += el.value + ' ';
-  });
-  
-  // 출력
   return result;
 }
 
@@ -40,16 +25,20 @@ class App extends Component{
   constructor(props) {
     super(props);
     this.ekoPlayer = new EkoPlayer('#ekoContainer');
+    this.checkResult = '';
   }
   
   load(player){
       return function(){ 
-        console.log(getCheckboxResult());
+        var checkboxvalue = getCheckboxValue();
+        console.log("check");
+        console.log(checkboxvalue);
         player.load('VyYlR0', {
         params: {
           autoplay: false,
           clearcheckpoints: true,
-          debug: true
+          debug: false,
+          result : checkboxvalue
         },
         events: ['nodestart', 'nodeend', 'playing', 'pause'],
         iframeAttributes: { title: 'My Eko Player' }
