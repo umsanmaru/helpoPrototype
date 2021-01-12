@@ -201,26 +201,43 @@ ul{
 
 }
 
-.btn {
-	cursor: pointer;
-	border-radius : 4px;
-	-webkit-box-shadow: 0px 24px 36px -11px rgba(0,0,0,0.09);
-	-moz-box-shadow: 0px 24px 36px -11px rgba(0,0,0,0.09);
-	box-shadow: 0px 24px 36px -11px rgba(0,0,0,0.09);
-	font-size : 15px;
-}
-
-.btn-primary {
-	background: skyblue !important;
-	border: 1px solid skyblue !important;
-	color: white !important;
-}
-
-.btn-primary:hover {
-	border: 1px solid white;
-	background: transparent;
-	color : white;
-}
+.btn-primary{
+	background:#4986fc;
+	color:#fff;
+	border:none;
+	position:relative;
+	height:30px;
+	font-size:15px;
+	font-weight : 800;
+	padding:0 0.5em;
+	cursor:pointer;
+	transition:800ms ease all;
+	outline:none;
+  }
+  .btn-primary:hover{
+	background:#fff;
+	color:#4986fc;
+  }
+  .btn-primary:before,.btn-primary:after{
+	content:'';
+	position:absolute;
+	top:0;
+	right:0;
+	height:2px;
+	width:0;
+	background: #4986fc;
+	transition:400ms ease all;
+  }
+  .btn-primary:after{
+	right:inherit;
+	top:inherit;
+	left:0;
+	bottom:0;
+  }
+  .btn-primary:hover:before,.btn-primary:hover:after{
+	width:100%;
+	transition:800ms ease all;
+  }
 
 .container{
 	max-width: 540px;
