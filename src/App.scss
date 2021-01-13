@@ -32,12 +32,10 @@ ul{
 
 
 .ftco-section {
-	padding: 7em 0;
+	padding: 50px 0;
+	margin : 20px;
 	position: relative;
 	width: 100%;
-	.container{
-		margin-right : 10%;
-	}
 }
 
 .ftco-no-pb{
@@ -54,7 +52,7 @@ ul{
 	-moz-box-shadow: 0px 10px 34px -15px rgba(0,0,0,0.24);
 	box-shadow: 0px 10px 34px -15px rgba(0,0,0,0.24);
 	z-index: 0;
-	margin-top: -570px;
+	margin-top: -500px;
 	margin-left : 25%;
 	/* 	@include media-breakpoint-down(sm){
 		margin-top: 3em;
@@ -271,7 +269,7 @@ ul{
 .ftco-navbar-light {
 	background: transparent!important;
 	position: absolute;
-	top: -8px;
+	top: -4px;
 	left: 0;
 	right: 0;
 	z-index: 3;
@@ -468,4 +466,17 @@ footer{
 	color : white;
 	padding : 10px;
 	background: linear-gradient( to right, #4986fc,#ce4be8 );
+}
+
+@media (max-width:1280px){
+	.login-wrap{
+		margin:0px auto;
+		margin-top: -50px;
+		margin-bottom : 30px;
+	}
+}
+@media (min-width:1280px){
+	.container{
+		margin-right : 10%;
+	}
 }
