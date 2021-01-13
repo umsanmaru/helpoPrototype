@@ -2,7 +2,8 @@ import EkoPlayer from './gitsrc/EkoPlayer.js';
 import React, { Component } from 'react'; 
 import utils from './gitsrc/lib/utils';
 import './App.scss';
-
+import FstForm from './FstForm.js'
+import SecForm from './SecForm.js'
 function getCheckboxValue()  {
   // 선택된 목록 가져오기
   const query = 'input[name="Section"]:checked';
@@ -27,6 +28,13 @@ class App extends Component{
     super(props);
     this.ekoPlayer = new EkoPlayer('#ekoContainer');
     this.checkResult = '';
+    this.state = {
+      count: 1,
+    }
+    this.increment = ()=>{
+      var temp = this.state.count;
+      this.setState({count:temp+1})
+    }
   }
   
   load(player){
@@ -48,12 +56,25 @@ class App extends Component{
     }
      
   }
+
+
   
   componentDidMount(){
-    utils.getContainer('#ekoContainer').appendChild(this.ekoPlayer.iframe);
+    if(this.state.count == 3){
+      utils.getContainer('#ekoContainer').appendChild(this.ekoPlayer.iframe);
+    }
   }
   
+
   render(){
+    if(this.state.count == 1){
+      var element = <FstForm></FstForm>;
+      var button = <button onClick = {this.increment} className="btn btn-primary submit">제출하기</button>;
+    }
+    if(this.state.count == 2){
+      var element = <SecForm></SecForm>;
+      var button  = <button onClick = {this.increment} className="btn btn-primary submit">제출하기</button>;
+    }
     /* this.test = "mytest";
     console.log(this.test);
     this.ekoPlayer = new EkoPlayer('#ekoContainer');
@@ -89,52 +110,30 @@ class App extends Component{
                 </div>
               </div>
             </div>
-            </section>
+          </section>
           <section className="ftco-section ftco-no-pb ftco-no-pt">
             <div className="container">
               <div className="row">
-                  <div className="col-md-7"></div>
-                  <div className="col-md-5 order-md-last">
+                <div className="col-md-7"></div>
+                <div className="col-md-5 order-md-last">
                   <div className="login-wrap p-4 p-md-5">
-                      <h3 className="mb-4">원하는 수업을 모두 선택해주세요</h3>
-                      <div className="signup-form">
-                          <div className="form-group">
-                            <input type='checkbox'  name='Section'  value='1' /> Section1
-                        </div>
-                        <div className="form-group">
-                            <input type= 'checkbox' name='Section'  value='2' /> Section2
-                        </div>
-                        <div className="form-group">
-                            <input type= 'checkbox' name='Section'  value='3' /> Section3
-                        </div>
-                        <div className="form-group">
-                            <input type= 'checkbox' name='Section'  value='3' /> Section4
-                        </div>
-                        <div className="form-group d-flex justify-content-end mt-4">
-                        <p className="text-center">제출하기 버튼을 누르고<br/>아래 영상을 시청해주세요</p>
-                            <button onClick = {this.load(this.ekoPlayer)} 
-                            className="btn btn-primary submit">제출하기</button>
-                        </div>
-                    </div>
+                    <div className="login-ajax">{element}{button}</div>
+                  </div>
+                </div>
               </div>
-          </div>
-        </div>
-        </div>
-        </section>
+            </div>
+          </section>
           <div id="myContainer" className="eko-player"></div>
           <div id='result'></div>
           <div>
-            <div id="ekoContainer" className="eko-player">
-            </div>
-            <div id="ekoLoadingCover" className="eko-cover eko-player">
-            </div>
+            <div id="ekoContainer" className="eko-player"></div>
+            <div id="ekoLoadingCover" className="eko-cover eko-player"></div>
           </div>
         </body>
         <footer>
           <h3>Contact</h3>
           <h4>treviewofficial@gmail.com</h4>
-        </footer>
-        
+        </footer>        
       </div>
     );
   }
