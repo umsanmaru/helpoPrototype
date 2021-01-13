@@ -32,12 +32,10 @@ ul{
 
 
 .ftco-section {
-	padding: 7em 0;
+	padding: 50px 0;
+	margin : 20px;
 	position: relative;
 	width: 100%;
-	.container{
-		margin-right : 10%;
-	}
 }
 
 .ftco-no-pb{
@@ -54,7 +52,7 @@ ul{
 	-moz-box-shadow: 0px 10px 34px -15px rgba(0,0,0,0.24);
 	box-shadow: 0px 10px 34px -15px rgba(0,0,0,0.24);
 	z-index: 0;
-	margin-top: -570px;
+	margin-top: -500px;
 	margin-left : 25%;
 	/* 	@include media-breakpoint-down(sm){
 		margin-top: 3em;
@@ -201,26 +199,43 @@ ul{
 
 }
 
-.btn {
-	cursor: pointer;
-	border-radius : 4px;
-	-webkit-box-shadow: 0px 24px 36px -11px rgba(0,0,0,0.09);
-	-moz-box-shadow: 0px 24px 36px -11px rgba(0,0,0,0.09);
-	box-shadow: 0px 24px 36px -11px rgba(0,0,0,0.09);
-	font-size : 15px;
-}
-
-.btn-primary {
-	background: skyblue !important;
-	border: 1px solid skyblue !important;
-	color: white !important;
-}
-
-.btn-primary:hover {
-	border: 1px solid white;
-	background: transparent;
-	color : white;
-}
+.btn-primary{
+	background:#4986fc;
+	color:#fff;
+	border:none;
+	position:relative;
+	height:30px;
+	font-size:15px;
+	font-weight : 800;
+	padding:0 0.5em;
+	cursor:pointer;
+	transition:800ms ease all;
+	outline:none;
+  }
+  .btn-primary:hover{
+	background:#fff;
+	color:#4986fc;
+  }
+  .btn-primary:before,.btn-primary:after{
+	content:'';
+	position:absolute;
+	top:0;
+	right:0;
+	height:2px;
+	width:0;
+	background: #4986fc;
+	transition:400ms ease all;
+  }
+  .btn-primary:after{
+	right:inherit;
+	top:inherit;
+	left:0;
+	bottom:0;
+  }
+  .btn-primary:hover:before,.btn-primary:hover:after{
+	width:100%;
+	transition:800ms ease all;
+  }
 
 .container{
 	max-width: 540px;
@@ -254,7 +269,7 @@ ul{
 .ftco-navbar-light {
 	background: transparent!important;
 	position: absolute;
-	top: -8px;
+	top: -4px;
 	left: 0;
 	right: 0;
 	z-index: 3;
@@ -451,4 +466,17 @@ footer{
 	color : white;
 	padding : 10px;
 	background: linear-gradient( to right, #4986fc,#ce4be8 );
+}
+
+@media (max-width:1280px){
+	.login-wrap{
+		margin:0px auto;
+		margin-top: -50px;
+		margin-bottom : 30px;
+	}
+}
+@media (min-width:1280px){
+	.container{
+		margin-right : 10%;
+	}
 }
