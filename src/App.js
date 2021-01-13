@@ -34,6 +34,8 @@ class App extends Component{
         var checkboxvalue = getCheckboxValue();
         console.log("check");
         console.log(checkboxvalue);
+        var ifr = document.querySelector("iframe");
+        ifr.style.display = "block";
         player.load('VyYlR0', {
         params: {
           autoplay: false,
