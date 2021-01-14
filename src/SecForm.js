@@ -24,49 +24,9 @@ function getCheckboxValue()  {
 
 
 class FstForm extends Component{
-  constructor(props) {
-    super(props);
-    this.ekoPlayer = new EkoPlayer('#ekoContainer');
-    this.checkResult = '';
-    this.state = {
-      count: 1,
-    }
-  }
-  
-  load(player){
-      return function(){ 
-        var checkboxvalue = getCheckboxValue();
-        console.log("check");
-        console.log(checkboxvalue);
-        player.load('VyYlR0', {
-        params: {
-          autoplay: false,
-          clearcheckpoints: true,
-          debug: false,
-          result : checkboxvalue
-        },
-        events: ['nodestart', 'nodeend', 'playing', 'pause'],
-        iframeAttributes: { title: 'My Eko Player' }
-      });
-    
-    }
-     
-  }
 
-
-  
-  componentDidMount(){
-    utils.getContainer('#ekoContainer').appendChild(this.ekoPlayer.iframe);
-    
-  }
-  
 
   render(){
-    console.log(this.state.count == 2)
-    if(this.state.count >= 2){
-      console.log("here")
-      return (<div className='fstForm'>hello</div>); 
-    }
     return (
       <div className="fstForm">
       <h3 className="mb-4">Second Form</h3>
@@ -81,7 +41,7 @@ class FstForm extends Component{
             <input type= 'checkbox' name='Section'  value='3' /> Section3
           </div>
           <div className="form-group">
-            <input type= 'checkbox' name='Section'  value='3' /> Section4
+            <input type= 'checkbox' name='Section'  value='4' /> Section4
           </div>
           <div className="form-group d-flex justify-content-end mt-4">
             <p className="text-center">제출하기 버튼을 누르고<br/>아래 영상을 시청해주세요</p>

@@ -1,14 +1,14 @@
-import EkoPlayer from './gitsrc/EkoPlayer.js';
 import React, { Component } from 'react'; 
-import utils from './gitsrc/lib/utils';
 import './App.scss';
 
-class FstForm extends Component{
+
+class ThdForm extends Component{
   
+
   render(){
     return (
       <div className="fstForm">
-      <h3 className="mb-4">원하는 수업을 모두 선택해주세요</h3>
+      <h3 className="mb-4">Third Form</h3>
         <div className="signup-form">
           <div className="form-group">
             <input type='checkbox'  name='Section'  value='1' /> Section1
@@ -32,6 +32,6 @@ class FstForm extends Component{
   
 }
 
-export default FstForm;
+export default ThdForm;
 
 

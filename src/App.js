@@ -4,24 +4,8 @@ import utils from './gitsrc/lib/utils';
 import './App.scss';
 import FstForm from './FstForm.js'
 import SecForm from './SecForm.js'
-function getCheckboxValue()  {
-  // 선택된 목록 가져오기
-  const query = 'input[name="Section"]:checked';
-  const selectedEls = 
-      document.querySelectorAll(query);
-  
-  // 선택된 목록에서 value 찾기
-  let result = '';
-  selectedEls.forEach((el) => {
-    result += el.value + ' ';
-  });
-  
-  // 출력
-  /* document.getElementById('result').innerText
-    = result; */
-  console.log(result);
-  return result;
-}
+import ThdForm from './ThdForm.js'
+
 
 class App extends Component{
   constructor(props) {
@@ -32,66 +16,76 @@ class App extends Component{
       count: 1,
     }
     this.increment = ()=>{
+      console.log(this.state.count)
+      this.getCheckboxValue()
       var temp = this.state.count;
       this.setState({count:temp+1})
     }
-  }
-  
-  load(player){
-      return function(){ 
-        var checkboxvalue = getCheckboxValue();
-        console.log("check");
-        console.log(checkboxvalue);
-        var ifr = document.querySelector("iframe");
-        ifr.style.display = "block";
-        player.load('VyYlR0', {
-        params: {
-          autoplay: false,
-          clearcheckpoints: true,
-          debug: false,
-          result : checkboxvalue
-        },
-        events: ['nodestart', 'nodeend', 'playing', 'pause'],
-        iframeAttributes: { title: 'My Eko Player' }
+
+    this.getCheckboxValue = ()=>{
+      // 선택된 목록 가져오기
+      console.log(this.state.count);
+      const query = 'input[name="Section"]';
+      const query2 = 'input[name="Section"]:checked'
+      const inputEls = 
+          document.querySelectorAll(query);
+      var checkedInputEls = 
+          document.querySelectorAll(query2);
+      checkedInputEls = Array.from(checkedInputEls);
+      
+      // 선택된 목록에서 value 찾기
+      let result = '';
+      inputEls.forEach((el, i) => {
+        var j = i+1;
+        if(checkedInputEls.includes(el))
+          result += this.state.count + '-' + j + 'q' + el.value + ' ';
+        else
+          result += this.state.count + '-' + j + 'q' + "x" + ' ';
       });
-    
+      
+      // 출력
+      /* document.getElementById('result').innerText
+        = result; */
+      console.log(result);
+      this.checkResult = this.checkResult + result;
     }
-     
+
+    this.load = (player, getCheckboxValue)=>{
+      var checkResult = this.checkResult;
+      return function(){ 
+          getCheckboxValue();
+          console.log(checkResult);
+          player.load('VyYlR0', {
+          params: {
+            autoplay: false,
+            clearcheckpoints: true,
+            debug: false,
+            result : checkResult
+          },
+          events: ['nodestart', 'nodeend', 'playing', 'pause'],
+          iframeAttributes: { title: 'My Eko Player' }
+        });
+      }
+    }   
   }
-
-
-  
   componentDidMount(){
-    if(this.state.count == 3){
-      utils.getContainer('#ekoContainer').appendChild(this.ekoPlayer.iframe);
-    }
+    utils.getContainer('#ekoContainer').appendChild(this.ekoPlayer.iframe);
   }
   
 
   render(){
     if(this.state.count == 1){
-      var element = <FstForm></FstForm>;
-      var button = <button onClick = {this.increment} className="btn btn-primary submit">제출하기</button>;
+      var element = <FstForm/>;
+      var button = <button onClick = {this.increment} className="btn btn-primary submit">다음</button>;
     }
     if(this.state.count == 2){
       var element = <SecForm></SecForm>;
-      var button  = <button onClick = {this.increment} className="btn btn-primary submit">제출하기</button>;
+      var button  = <button onClick = {this.increment} className="btn btn-primary submit">다음</button>;
     }
-    /* this.test = "mytest";
-    console.log(this.test);
-    this.ekoPlayer = new EkoPlayer('#ekoContainer');
-    const load = function(player){
-        player.load('VyYlR0', {
-          params: {
-              autoplay: false,
-              clearcheckpoints: true,
-              debug: true
-          },
-          events: ['nodestart', 'nodeend', 'playing', 'pause'],
-          cover: '#myCoverId',
-          iframeAttributes: { title: 'My Eko Player' }
-      });
-    } */
+    if(this.state.count == 3){
+      var element = <ThdForm></ThdForm>
+      var button  = <button onClick = {this.load(this.ekoPlayer, this.getCheckboxValue)} className="btn btn-primary submit">제출하기</button>;
+    }
     return (
       <div className="App">
         <body>
@@ -119,7 +113,7 @@ class App extends Component{
                 <div className="col-md-7"></div>
                 <div className="col-md-5 order-md-last">
                   <div className="login-wrap p-4 p-md-5">
-                    <div className="login-ajax">{element}{button}</div>
+                    {element}{button}
                   </div>
                 </div>
               </div>
