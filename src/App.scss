@@ -36,6 +36,7 @@ ul{
 	margin : 20px;
 	position: relative;
 	width: 100%;
+	box-sizing: border-box;
 }
 
 .ftco-no-pb{
@@ -45,15 +46,17 @@ ul{
 .login-wrap{
 	position: relative;
 	width : 300px;
+	height : 520px;
 	background: $white;
 	padding : 10px;
 	border-radius: 10px;
-	-webkit-box-shadow: 0px 10px 34px -15px rgba(0,0,0,0.24);
-	-moz-box-shadow: 0px 10px 34px -15px rgba(0,0,0,0.24);
-	box-shadow: 0px 10px 34px -15px rgba(0,0,0,0.24);
+	-webkit-box-shadow: 10px 10px 10px 10px rgba(0,0,0,0.1);
+	-moz-box-shadow: 10px 10px 10px 10px rgba(0,0,0,0.1);
+	box-shadow: 3px 3px 10px 8px rgba(0,0,0,0.1);
 	z-index: 0;
-	margin-top: -500px;
-	margin-left : 25%;
+	margin-top: -550px;
+	margin-bottom: 100px;
+
 	/* 	@include media-breakpoint-down(sm){
 		margin-top: 3em;
 	} */
@@ -203,7 +206,9 @@ ul{
 	background:#4986fc;
 	color:#fff;
 	border:none;
-	position:relative;
+	position:absolute;
+	bottom : 10px;
+	right : 20px;
 	height:30px;
 	font-size:15px;
 	font-weight : 800;
@@ -459,6 +464,7 @@ ul{
 
 .text-center{
 	text-align : center;
+	margin : 5px;
 }
 
 footer{

@@ -2,75 +2,115 @@ import EkoPlayer from './gitsrc/EkoPlayer.js';
 import React, { Component } from 'react'; 
 import utils from './gitsrc/lib/utils';
 import './App.scss';
-
-function getCheckboxValue()  {
-  // 선택된 목록 가져오기
-  const query = 'input[name="Section"]:checked';
-  const selectedEls = 
-      document.querySelectorAll(query);
-  
-  // 선택된 목록에서 value 찾기
-  let result = '';
-  selectedEls.forEach((el) => {
-    result += el.value + ' ';
-  });
-  
-  // 출력
-  /* document.getElementById('result').innerText
-    = result; */
-  console.log(result);
-  return result;
-}
+import FstForm from './form/FstForm.js';
+import SecForm from './form/SecForm.js';
+import ThdForm from './form/ThdForm.js';
+import FthForm from './form/FthForm.js';
+import LastForm from './form/LastForm.js';
 
 class App extends Component{
   constructor(props) {
     super(props);
     this.ekoPlayer = new EkoPlayer('#ekoContainer');
     this.checkResult = '';
-  }
-  
-  load(player){
-      return function(){ 
-        var checkboxvalue = getCheckboxValue();
-        console.log("check");
-        console.log(checkboxvalue);
-        var ifr = document.querySelector("iframe");
-        ifr.style.display = "block";
-        player.load('VyYlR0', {
-        params: {
-          autoplay: false,
-          clearcheckpoints: true,
-          debug: false,
-          result : checkboxvalue
-        },
-        events: ['nodestart', 'nodeend', 'playing', 'pause'],
-        iframeAttributes: { title: 'My Eko Player' }
-      });
-    
+    this.state = {
+      count: 1,
     }
-     
+    this.increment = ()=>{
+      console.log(this.state.count)
+      var checked = this.getCheckboxValue()
+      if(checked){
+        var temp = this.state.count;
+        this.setState({count:temp+1})
+      }
+      else{ //nothing checked => alert!
+        alert("답변을 체크해주세요");
+      }      
+    }
+
+    this.getCheckboxValue = ()=>{
+
+      // 선택된 목록 가져오기
+      console.log(this.state.count);
+      const query = 'input[name="Section"]';
+      const query2 = 'input[name="Section"]:checked'
+      const inputEls = 
+          document.querySelectorAll(query);
+      var checkedInputEls = 
+          document.querySelectorAll(query2);
+      checkedInputEls = Array.from(checkedInputEls);
+      
+      if(checkedInputEls.length==0){
+        console.log("nothing checked");
+        return 0;
+      }
+      else{
+        // 선택된 목록에서 value 찾기
+        let result = '';
+        inputEls.forEach((el, i) => {
+          var j = i+1;
+          if(checkedInputEls.includes(el))
+            result += this.state.count + '-' + j + 'q' + el.value + ' ';
+          else
+            result += this.state.count + '-' + j + 'q' + "x" + ' ';
+        });
+        
+        // 출력
+        /* document.getElementById('result').innerText
+          = result; */
+        console.log(result);
+        this.checkResult = this.checkResult + result;
+
+        return 1;
+      }
+    }
+
+    this.load = (player, getCheckboxValue)=>{
+      var checkResult = this.checkResult;
+      return function(){ 
+          getCheckboxValue();
+          console.log(checkResult);
+          player.load('VyYlR0', {
+          params: {
+            autoplay: false,
+            clearcheckpoints: true,
+            debug: false,
+            result : checkResult
+          },
+          events: ['nodestart', 'nodeend', 'playing', 'pause'],
+          iframeAttributes: { title: 'My Eko Player' }
+        });
+      }
+    }   
   }
-  
   componentDidMount(){
     utils.getContainer('#ekoContainer').appendChild(this.ekoPlayer.iframe);
   }
   
+
   render(){
-    /* this.test = "mytest";
-    console.log(this.test);
-    this.ekoPlayer = new EkoPlayer('#ekoContainer');
-    const load = function(player){
-        player.load('VyYlR0', {
-          params: {
-              autoplay: false,
-              clearcheckpoints: true,
-              debug: true
-          },
-          events: ['nodestart', 'nodeend', 'playing', 'pause'],
-          cover: '#myCoverId',
-          iframeAttributes: { title: 'My Eko Player' }
-      });
-    } */
+    var guidemsg= <div></div>;
+    if(this.state.count == 1){
+      var element = <FstForm/>;
+      var button = <button onClick = {this.increment} className="btn btn-primary submit">다음</button>;
+    }
+    if(this.state.count == 2){
+      var element = <SecForm></SecForm>;
+      var button  = <button onClick = {this.increment} className="btn btn-primary submit">다음</button>;
+    }
+    if(this.state.count==3){
+      var element = <ThdForm></ThdForm>;
+      var button  = <button onClick = {this.increment} className="btn btn-primary submit">다음</button>;
+    }
+    if(this.state.count==4){
+      var element = <FthForm></FthForm>;
+      var button  = <button onClick = {this.increment} className="btn btn-primary submit">다음</button>;
+    }
+    if(this.state.count == 5){
+      var element = <LastForm></LastForm>
+      var button  = <button onClick = {this.load(this.ekoPlayer, this.getCheckboxValue)} className="btn btn-primary submit">제출하기</button>;
+      guidemsg = <div className = "text-center">제출하기 버튼을 누르면<br/>👇아래👇 맞춤형 영상이 생성됩니다!</div>
+    }
     return (
       <div className="App">
         <body>
@@ -91,52 +131,30 @@ class App extends Component{
                 </div>
               </div>
             </div>
-            </section>
+          </section>
           <section className="ftco-section ftco-no-pb ftco-no-pt">
             <div className="container">
               <div className="row">
-                  <div className="col-md-7"></div>
-                  <div className="col-md-5 order-md-last">
+                <div className="col-md-7"></div>
+                <div className="col-md-5 order-md-last">
                   <div className="login-wrap p-4 p-md-5">
-                      <h3 className="mb-4">원하는 수업을 모두 선택해주세요</h3>
-                      <div className="signup-form">
-                          <div className="form-group">
-                            <input type='checkbox'  name='Section'  value='1' /> Section1
-                        </div>
-                        <div className="form-group">
-                            <input type= 'checkbox' name='Section'  value='2' /> Section2
-                        </div>
-                        <div className="form-group">
-                            <input type= 'checkbox' name='Section'  value='3' /> Section3
-                        </div>
-                        <div className="form-group">
-                            <input type= 'checkbox' name='Section'  value='3' /> Section4
-                        </div>
-                        <div className="form-group d-flex justify-content-end mt-4">
-                        <p className="text-center">제출하기 버튼을 누르고<br/>아래 영상을 시청해주세요</p>
-                            <button onClick = {this.load(this.ekoPlayer)} 
-                            className="btn btn-primary submit">제출하기</button>
-                        </div>
-                    </div>
+                    {element}{guidemsg}{button}
+                  </div>
+                </div>
               </div>
-          </div>
-        </div>
-        </div>
-        </section>
+            </div>
+          </section>
           <div id="myContainer" className="eko-player"></div>
           <div id='result'></div>
           <div>
-            <div id="ekoContainer" className="eko-player">
-            </div>
-            <div id="ekoLoadingCover" className="eko-cover eko-player">
-            </div>
+            <div id="ekoContainer" className="eko-player"></div>
+            <div id="ekoLoadingCover" className="eko-cover eko-player"></div>
           </div>
         </body>
         <footer>
           <h3>Contact</h3>
           <h4>treviewofficial@gmail.com</h4>
-        </footer>
-        
+        </footer>        
       </div>
     );
   }
