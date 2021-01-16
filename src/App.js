@@ -8,6 +8,8 @@ import ThdForm from './form/ThdForm.js';
 import FthForm from './form/FthForm.js';
 import LastForm from './form/LastForm.js';
 
+const ans = ['f', 't', 'f', 'f'];
+
 class App extends Component{
   constructor(props) {
     super(props);
@@ -46,21 +48,36 @@ class App extends Component{
       }
       else{
         // 선택된 목록에서 value 찾기
+        //
         let result = '';
         inputEls.forEach((el, i) => {
-          var j = i+1;
-          if(checkedInputEls.includes(el))
-            result += this.state.count + '-' + j + 'q' + el.value + ' ';
-          else
-            result += this.state.count + '-' + j + 'q' + "x" + ' ';
-        });
+          if(checkedInputEls.includes(el)){
+            if(el.value == 'n'){
+              result += this.state.count + ':' + 'N' + ' ';
+            }
+            else if(ans[this.state.count-1] == el.value){
+              result += this.state.count + ':' + 'O' + ' ';
+            }
+            else
+              result += this.state.count + ':' + 'X' + ' ';
+          }
+            
+          
+          // var j = i + 1;
+          // if(checkedInputEls.includes(el))
+          //   result += this.state.count + '-' + j + ':' + el.value + ' ';
+          // else
+          //   result += this.state.count + '-' + j + ':' + "x" + ' ';
+          
+          
+          });
         
         // 출력
         /* document.getElementById('result').innerText
           = result; */
         console.log(result);
         this.checkResult = this.checkResult + result;
-
+        console.log(this.checkResult);
         return 1;
       }
     }
