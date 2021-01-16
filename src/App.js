@@ -7,6 +7,7 @@ import SecForm from './form/SecForm.js';
 import ThdForm from './form/ThdForm.js';
 import FthForm from './form/FthForm.js';
 import LastForm from './form/LastForm.js';
+import BgnForm from './form/BgnForm.js';
 
 class App extends Component{
   constructor(props) {
@@ -14,7 +15,7 @@ class App extends Component{
     this.ekoPlayer = new EkoPlayer('#ekoContainer');
     this.checkResult = '';
     this.state = {
-      count: 1,
+      count: 0,
     }
     this.increment = ()=>{
       console.log(this.state.count)
@@ -90,6 +91,10 @@ class App extends Component{
 
   render(){
     var guidemsg= <div></div>;
+    if(this.state.count==0){
+      var element = <BgnForm/>;
+      var button = <button onClick = {this.increment} className="btn btn-primary submit">다음</button>;
+    }
     if(this.state.count == 1){
       var element = <FstForm/>;
       var button = <button onClick = {this.increment} className="btn btn-primary submit">다음</button>;
