@@ -11,7 +11,7 @@ class ThdForm extends Component{
     return (
       <div className="fstForm">
       <h3 className="mb-4">문제 3</h3>
-      <img src={graph} alt='graph' width="300" height="200"/>
+      <img src={graph} alt='graph' width="80%" height="30%"/>
       <h4>x=1에서 좌극한과 우극한은 모두 3이다.</h4>
         <div className="signup-form">
         <div className="form-group">

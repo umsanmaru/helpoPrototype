@@ -13,7 +13,7 @@ class FstForm extends Component{
       <h4><MathComponent tex={String.raw`y= x^2+x-2`} display ={false}/> 함수의 x=1 부터 x=7까지 평균변화율은 11이다</h4>
         <div className="signup-form">
         <div className="form-group">
-            <input type='radio' name='Section' value='t' />T
+            <input type='radio' name='Section' value='t'/>T
           </div>
           <div className="form-group">
             <input type='radio' name='Section' value='f' />F

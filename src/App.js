@@ -93,11 +93,13 @@ class App extends Component{
             autoplay: false,
             clearcheckpoints: true,
             debug: false,
-            result : checkResult
+            result : checkResult,
+            autoplay : true
           },
           events: ['nodestart', 'nodeend', 'playing', 'pause'],
           iframeAttributes: { title: 'My Eko Player' }
         });
+        
       }
     }   
   }
@@ -107,6 +109,16 @@ class App extends Component{
   
 
   render(){
+    var filter = "win16|win32|win64|mac|macintel";
+    if (filter.indexOf(navigator.platform.toLowerCase()) < 0) {
+      console.log("mobile");
+      
+      //MOBILE        
+    }else {
+      document.getElementById("styleTag").href="MoileApp.scss";
+      console.log("pc");
+    //PC                                                                 
+    }
     var guidemsg= <div></div>;
     if(this.state.count==0){
       var element = <BgnForm/>;
@@ -155,7 +167,7 @@ class App extends Component{
             </div>
           </section>
           <section className="ftco-section ftco-no-pb ftco-no-pt">
-            <div className="container">
+            <div className="container2">
               <div className="row">
                 <div className="col-md-7"></div>
                 <div className="col-md-5 order-md-last">

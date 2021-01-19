@@ -29,7 +29,7 @@ class FstForm extends Component{
     return (
       <div className="fstForm">
       <h3 className="mb-4">문제 2</h3>
-      <h4> <MathComponent tex={String.raw`y=x^2+x-2`}/>의 <MathComponent tex={String.raw`x=5`} display={false}/>에서의 접선의 기울기는 11이다.</h4>
+      <h4> <MathComponent tex={String.raw`y=x^2+x-2`} display={false}/>의 <MathComponent tex={String.raw`x=5`} display={false}/>에서의 접선의 기울기는 11이다.</h4>
         <div className="signup-form">
           <div className="form-group">
             <input type='radio' name='Section' value='t' />T

@@ -35,7 +35,7 @@ class FstForm extends Component{
   render(){
     return (
       <div className="fstForm">
-      <h3 className="mb-4">듣고싶은 수업 Section을<br/>모두 선택해주세요</h3>
+      <h3 className="mb-4">듣고싶은 수업 Section을 <br/>모두 선택해주세요</h3>
       <div className="form-group">
             <input type='checkbox'  name='Section'  value='1' /> 롤의정리란?
           </div>
