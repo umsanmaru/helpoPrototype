@@ -86,19 +86,25 @@ class App extends Component{
     this.load = (player, getCheckboxValue)=>{
       var checkResult = this.checkResult;
       return function(){ 
-          getCheckboxValue();
-          console.log(checkResult);
-          player.load('VyYlR0', {
-          params: {
-            autoplay: false,
-            clearcheckpoints: true,
-            debug: false,
-            result : checkResult,
-            autoplay : true
-          },
-          events: ['nodestart', 'nodeend', 'playing', 'pause'],
-          iframeAttributes: { title: 'My Eko Player' }
-        });
+          var checked = getCheckboxValue();
+          if(checked){
+            console.log(checkResult);
+            player.load('VyYlR0', {
+            params: {
+              autoplay: false,
+              clearcheckpoints: true,
+              debug: false,
+              result : checkResult,
+              autoplay : true
+            },
+            events: ['nodestart', 'nodeend', 'playing', 'pause'],
+            iframeAttributes: { title: 'My Eko Player' }
+            });
+          }
+          else{ //nothing checked => alert!
+            alert("Section을 하나 이상 체크해주세요");
+          }   
+         
         
       }
     }   
