@@ -54,17 +54,19 @@ class App extends Component{
       var checkResult = this.checkResult;
       return function(){ 
           getCheckboxValue();
+          console.log("version");
+          console.log(player);
           console.log(checkResult);
           player.load('VyYlR0', {
-          params: {
-            autoplay: false,
-            clearcheckpoints: true,
-            debug: false,
-            result : checkResult
-          },
-          events: ['nodestart', 'nodeend', 'playing', 'pause'],
-          iframeAttributes: { title: 'My Eko Player' }
-        });
+            params: {
+              autoplay: false,
+              clearcheckpoints: true,
+              debug: false,
+              result : checkResult
+            },
+            events: ['nodestart', 'nodeend', 'playing', 'pause'],
+            iframeAttributes: { title: 'My Eko Player' }
+          });
       }
     }   
   }
