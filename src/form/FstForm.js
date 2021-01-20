@@ -10,7 +10,7 @@ class FstForm extends Component{
     return (
       <div className="fstForm">
       <h3 className="mb-4">문제 1</h3>
-      <h4><MathComponent tex={String.raw`y= x^2+x-2`} display ={false}/> 함수의 x=1 부터 x=7까지 평균변화율은 11이다</h4>
+      <h4 className="h4-question"><MathComponent tex={String.raw`y= x^2+x-2`} display ={false}/> 함수의 x=1 부터 x=7까지 평균변화율은 11이다</h4>
         <div className="signup-form">
         <div className="form-group">
             <input type='radio' name='Section' value='t'/>T

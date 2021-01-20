@@ -8,7 +8,7 @@ class BgnForm extends Component{
     return (
       <div className="bgnForm">
       <h3 className="mb-4">자신의 수학실력을 <br/>상/중/하로 선택해주세요</h3>
-      <h4>
+      <h4 className="h4-question">
           맞춤형 수업을 제공하기 위한 설문이니 <br/>개개인의 기준으로 판단하면 됩니다.
       </h4>
         <div className="signup-form">
