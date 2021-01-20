@@ -240,7 +240,7 @@ class App extends Component{
                   <span class="subheading">Welcome to HELPO</span>
                   <h1 class="mb-4">인터랙티브 강의<br/>사용후기를 들려주세요!</h1>
                   <p class="caps">HELPO는 정적인 인터넷강의의 형태에서 벗어나 학생의 학습과정 데이터를 실시간으로 반영하여 맞춤형 수업을 제공합니다</p>
-                  <p class="mb-0"><button href="#" class="btn btn-primary">강의 후기</button></p>
+                  <p class="mb-0"><button href = "#" class="btn btn-primary"><a class="link" href = "https://docs.google.com/forms/d/1i7Xbp72wj9uEO7SXnsDRx4UM22F5Ds_mlklRRylSdzc/edit">강의 후기</a></button></p>
                 </div>
               </div>
             </div>
