@@ -11,19 +11,17 @@ import BgnForm from './form/BgnForm.js';
 
 const databaseURL = "https://eko-test-5fa72-default-rtdb.firebaseio.com";
 const ans = ['f', 't', 'f', 'f'];
-const data = ['B', '1_2_3'];
+const data = ['B'];
 
 class App extends Component{
   constructor(props) {
     super(props);
     this.ekoPlayer = new EkoPlayer('#ekoContainer');
     this.checkResult = '';
-    this.id = '';
+    this.selectedGrade = '';
     this.state = {
       count: 1,
-      id: '',
-      students: {},
-      grade: '',
+      a: ""
     }
     this.increment = ()=>{
       var checked = this.getCheckboxValue()
@@ -47,10 +45,7 @@ class App extends Component{
           }
           return res.json();
       }).then(data => {
-          let nextState = this.state.students;
-          nextState[data.name] = word;
-          this.setState({questions: nextState});
-          this.setState({id: data.name});
+          this.setState({a: "done"});
           return(data.name);
       });
       
@@ -109,13 +104,13 @@ class App extends Component{
     this.load = (player, getCheckboxValue)=>{
       
       var data0 = {
-        grade: data[0],
-        lecture: data[1],
+        grade: data[0]
       };
       var theobj = this;
       return function(){ 
           var checked = getCheckboxValue();
           data0["quiz"] = theobj.checkResult;
+          data0["selectedGrade"] = theobj.selectedGrade;
           theobj.post(data0).then((id) => {
             if(checked){
               var temp = theobj.state.count;
