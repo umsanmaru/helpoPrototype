@@ -19,9 +19,10 @@ class App extends Component{
     this.ekoPlayer = new EkoPlayer('#ekoContainer');
     this.checkResult = '';
     this.selectedGrade = '';
+    this.quizscore = 0;
     this.state = {
-      count: 1,
-      a: ""
+      count: 0,
+      post: ""
     }
     this.increment = ()=>{
       var checked = this.getCheckboxValue()
@@ -45,7 +46,7 @@ class App extends Component{
           }
           return res.json();
       }).then(data => {
-          this.setState({a: "done"});
+          this.setState({post: "done"});
           return(data.name);
       });
       
@@ -62,7 +63,6 @@ class App extends Component{
       var checkedInputEls = 
           document.querySelectorAll(query2);
       checkedInputEls = Array.from(checkedInputEls);
-      
       if(checkedInputEls.length==0){
         console.log("nothing checked");
         return 0;
@@ -73,14 +73,26 @@ class App extends Component{
         let result = '';
         inputEls.forEach((el, i) => {
           if(checkedInputEls.includes(el)){
-            if(el.value == 'n'){
+            if(el.value == 'top'){
+              this.selectedGrade = 'A';
+            }
+            else if(el.value == 'middle'){
+              this.selectedGrade = 'B';
+            }
+            else if(el.value == 'bottom'){
+              this.selectedGrade = 'C';
+            }
+            else if(el.value == 'n'){
               result += this.state.count + ':' + 'N' + ' ';
             }
             else if(ans[this.state.count-1] == el.value){
               result += this.state.count + ':' + 'O' + ' ';
+              this.quizscore += 6;
             }
-            else
+            else{
               result += this.state.count + ':' + 'X' + ' ';
+              this.quizscore -= 8;
+            }
           }
             
           
@@ -101,16 +113,41 @@ class App extends Component{
       }
     }
 
+    this.getGrade = () =>{
+      var score = 0;
+      var grade = '';
+      if(this.selectedGrade == 'A'){
+        score = 60;
+      }
+      else if(this.selectedGrade == 'B'){
+        score = 50;
+      }
+      else if(this.selectedGrade == 'C'){
+        score = 40;
+      }
+      score += this.quizscore;
+
+      if(score >= 60)
+        grade = 'A';
+      else if(score >= 50)
+        grade = 'B';
+      else 
+        grade = 'C';
+      
+      return grade;
+    }
+
     this.load = (player, getCheckboxValue)=>{
       
       var data0 = {
-        grade: data[0]
       };
       var theobj = this;
       return function(){ 
           var checked = getCheckboxValue();
           data0["quiz"] = theobj.checkResult;
           data0["selectedGrade"] = theobj.selectedGrade;
+          var _grade = theobj.getGrade();
+          data0['grade'] = _grade;
           theobj.post(data0).then((id) => {
             if(checked){
               var temp = theobj.state.count;
@@ -121,6 +158,7 @@ class App extends Component{
                 clearcheckpoints: true,
                 debug: false,
                 result : theobj.checkResult,
+                grade: _grade,
                 autoplay : true,
                 id: id
               },
