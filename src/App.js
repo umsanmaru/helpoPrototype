@@ -2,27 +2,62 @@ import EkoPlayer from './gitsrc/EkoPlayer.js';
 import React, { Component } from 'react'; 
 import utils from './gitsrc/lib/utils';
 import './App.scss';
-import FstForm from './FstForm.js'
-import SecForm from './SecForm.js'
-import ThdForm from './ThdForm.js'
+import FstForm from './form/FstForm.js';
+import SecForm from './form/SecForm.js';
+import ThdForm from './form/ThdForm.js';
+import FthForm from './form/FthForm.js';
+import LastForm2 from './form/LastForm2.js';
+import BgnForm from './form/BgnForm.js';
 
+const databaseURL = "https://eko-test-5fa72-default-rtdb.firebaseio.com";
+const ans = ['f', 't', 'f', 'f'];
+const data = ['B', '1_2_3'];
 
 class App extends Component{
   constructor(props) {
     super(props);
     this.ekoPlayer = new EkoPlayer('#ekoContainer');
     this.checkResult = '';
+    this.id = '';
     this.state = {
       count: 1,
+      id: '',
+      students: {},
+      grade: '',
     }
     this.increment = ()=>{
-      console.log(this.state.count)
-      this.getCheckboxValue()
-      var temp = this.state.count;
-      this.setState({count:temp+1})
+      var checked = this.getCheckboxValue()
+      if(checked){
+        var temp = this.state.count;
+        this.setState({count:temp+1})
+      }
+      else{ //nothing checked => alert!
+        alert("답변을 체크해주세요");
+      }      
+    }
+
+    this.post = (word) => {
+      return fetch(`${databaseURL}/questions.json`, {
+          method: 'POST',
+          body: JSON.stringify(word)
+  
+      }).then(res => {
+          if(res.status != 200){
+              throw new Error(res.statusText);
+          }
+          return res.json();
+      }).then(data => {
+          let nextState = this.state.students;
+          nextState[data.name] = word;
+          this.setState({questions: nextState});
+          this.setState({id: data.name});
+          return(data.name);
+      });
+      
     }
 
     this.getCheckboxValue = ()=>{
+
       // 선택된 목록 가져오기
       console.log(this.state.count);
       const query = 'input[name="Section"]';
@@ -33,42 +68,77 @@ class App extends Component{
           document.querySelectorAll(query2);
       checkedInputEls = Array.from(checkedInputEls);
       
-      // 선택된 목록에서 value 찾기
-      let result = '';
-      inputEls.forEach((el, i) => {
-        var j = i+1;
-        if(checkedInputEls.includes(el))
-          result += this.state.count + '-' + j + 'q' + el.value + ' ';
-        else
-          result += this.state.count + '-' + j + 'q' + "x" + ' ';
-      });
-      
-      // 출력
-      /* document.getElementById('result').innerText
-        = result; */
-      console.log(result);
-      this.checkResult = this.checkResult + result;
+      if(checkedInputEls.length==0){
+        console.log("nothing checked");
+        return 0;
+      }
+      else{
+        // 선택된 목록에서 value 찾기
+        //
+        let result = '';
+        inputEls.forEach((el, i) => {
+          if(checkedInputEls.includes(el)){
+            if(el.value == 'n'){
+              result += this.state.count + ':' + 'N' + ' ';
+            }
+            else if(ans[this.state.count-1] == el.value){
+              result += this.state.count + ':' + 'O' + ' ';
+            }
+            else
+              result += this.state.count + ':' + 'X' + ' ';
+          }
+            
+          
+          // var j = i + 1;
+          // if(checkedInputEls.includes(el))
+          //   result += this.state.count + '-' + j + ':' + el.value + ' ';
+          // else
+          //   result += this.state.count + '-' + j + ':' + "x" + ' ';
+          
+          
+          });
+        
+        // 출력
+        /* document.getElementById('result').innerText
+          = result; */
+        this.checkResult = this.checkResult + result;
+        return 1;
+      }
     }
 
     this.load = (player, getCheckboxValue)=>{
-      var checkResult = this.checkResult;
+      
+      var data0 = {
+        grade: data[0],
+        lecture: data[1],
+      };
+      var theobj = this;
       return function(){ 
-          getCheckboxValue();
-          console.log("version");
-          console.log(player);
-          console.log(checkResult);
-          player.load('VyYlR0', {
-            params: {
-              autoplay: false,
-              clearcheckpoints: true,
-              debug: false,
-              result : checkResult
-            },
-            events: ['nodestart', 'nodeend', 'playing', 'pause'],
-            iframeAttributes: { title: 'My Eko Player' }
-          });
+          var checked = getCheckboxValue();
+          data0["quiz"] = theobj.checkResult;
+          theobj.post(data0).then((id) => {
+            if(checked){
+              var temp = theobj.state.count;
+              theobj.setState({count:temp+1})
+              player.load('VyYlR0', {
+              params: {
+                autoplay: false,
+                clearcheckpoints: true,
+                debug: false,
+                result : theobj.checkResult,
+                autoplay : true,
+                id: id
+              },
+              events: ['nodestart', 'nodeend', 'playing', 'pause'],
+              iframeAttributes: { title: 'My Eko Player' }
+              });
+            }
+            else{ //nothing checked => alert!
+              alert("Section을 하나 이상 체크해주세요");
+            }     
+          })
       }
-    }   
+    }
   }
   componentDidMount(){
     utils.getContainer('#ekoContainer').appendChild(this.ekoPlayer.iframe);
@@ -76,6 +146,21 @@ class App extends Component{
   
 
   render(){
+    var filter = "win16|win32|win64|mac|macintel";
+    if (filter.indexOf(navigator.platform.toLowerCase()) < 0) {
+      console.log("mobile");
+      
+      //MOBILE        
+    }else {
+      document.getElementById("styleTag").href="MoileApp.scss";
+      console.log("pc");
+    //PC                                                                 
+    }
+    var guidemsg= <div></div>;
+    if(this.state.count==0){
+      var element = <BgnForm/>;
+      var button = <button onClick = {this.increment} className="btn btn-primary submit">다음</button>;
+    }
     if(this.state.count == 1){
       var element = <FstForm/>;
       var button = <button onClick = {this.increment} className="btn btn-primary submit">다음</button>;
@@ -84,9 +169,22 @@ class App extends Component{
       var element = <SecForm></SecForm>;
       var button  = <button onClick = {this.increment} className="btn btn-primary submit">다음</button>;
     }
-    if(this.state.count == 3){
-      var element = <ThdForm></ThdForm>
+    if(this.state.count==3){
+      var element = <ThdForm></ThdForm>;
+      var button  = <button onClick = {this.increment} className="btn btn-primary submit">다음</button>;
+    }
+    if(this.state.count==4){
+      var element = <FthForm></FthForm>;
       var button  = <button onClick = {this.load(this.ekoPlayer, this.getCheckboxValue)} className="btn btn-primary submit">제출하기</button>;
+    }
+    // if(this.state.count == 5){
+    //   var element = <LastForm></LastForm>
+    //   var button  = <button onClick = {this.load(this.ekoPlayer, this.getCheckboxValue)} className="btn btn-primary submit">제출하기</button>;
+    //   guidemsg = <div className = "text-center">제출하기 버튼을 누르면<br/>👇아래👇 맞춤형 영상이 생성됩니다!</div>
+    // }
+    if(this.state.count == 5){
+      var element = <LastForm2></LastForm2>;
+      var button = <div></div>;
     }
     return (
       <div className="App">
@@ -110,12 +208,12 @@ class App extends Component{
             </div>
           </section>
           <section className="ftco-section ftco-no-pb ftco-no-pt">
-            <div className="container">
+            <div className="container2">
               <div className="row">
                 <div className="col-md-7"></div>
                 <div className="col-md-5 order-md-last">
                   <div className="login-wrap p-4 p-md-5">
-                    {element}{button}
+                    {element}{guidemsg}{button}
                   </div>
                 </div>
               </div>
