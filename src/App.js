@@ -20,8 +20,8 @@ class App extends Component{
     this.checkResult = '';
     this.selectedGrade = '';
     this.state = {
-      count: 1,
-      a: ""
+      count: 0,
+      post: ""
     }
     this.increment = ()=>{
       var checked = this.getCheckboxValue()
@@ -45,7 +45,7 @@ class App extends Component{
           }
           return res.json();
       }).then(data => {
-          this.setState({a: "done"});
+          this.setState({post: "done"});
           return(data.name);
       });
       
@@ -115,7 +115,7 @@ class App extends Component{
             if(checked){
               var temp = theobj.state.count;
               theobj.setState({count:temp+1})
-              player.load('VyYlR0', {
+              player.load('VXdBxb', {
               params: {
                 autoplay: false,
                 clearcheckpoints: true,
