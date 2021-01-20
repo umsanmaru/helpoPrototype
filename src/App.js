@@ -165,6 +165,11 @@ class App extends Component{
               events: ['nodestart', 'nodeend', 'playing', 'pause'],
               iframeAttributes: { title: 'My Eko Player' }
               });
+              window.scrollTo({
+                top: 1000,
+                left: 0,
+                behavior: 'smooth'
+              });
             }
             else{ //nothing checked => alert!
               alert("Section을 하나 이상 체크해주세요");
