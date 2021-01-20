@@ -13,7 +13,7 @@ class FstForm extends Component{
           <div className="fstForm">
           <h3 className="mb-4">문제 4</h3>
           <img src={graph} alt='graph' width="80%" height="30%"/>
-          <h4>f(x)는 x=1에서 미분가능하다</h4>
+          <h4 className="h4-question">f(x)는 x=1에서 미분가능하다</h4>
             <div className="signup-form">
             <div className="form-group">
             <input type='radio' name='Section' value='t' />T
