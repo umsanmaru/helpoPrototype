@@ -83,6 +83,7 @@ class App extends Component{
             }
             else if(el.value == 'n'){
               result += this.state.count + ':' + 'N' + ' ';
+              this.quizscore -= 4;
             }
             else if(ans[this.state.count-1] == el.value){
               result += this.state.count + ':' + 'O' + ' ';
