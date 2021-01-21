@@ -536,4 +536,21 @@ footer{
 	.col-md-5{
 		height : 900px;
 	}
+
+	#left-touch{
+		height:400px;
+		width:50%;
+		position:absolute;
+		left:0;
+		background:yellow;
+	}
+	
+	#right-touch{
+		height:400px;
+		width:50%;
+		position:absolute;
+		right:0;
+		background:yellow;
+	}
 }
+

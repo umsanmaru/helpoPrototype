@@ -11,7 +11,6 @@ import BgnForm from './form/BgnForm.js';
 
 const databaseURL = "https://eko-test-5fa72-default-rtdb.firebaseio.com";
 const ans = ['f', 't', 'f', 'f'];
-const data = ['B'];
 
 class App extends Component{
   constructor(props) {
@@ -198,22 +197,32 @@ class App extends Component{
     if(this.state.count==0){
       var element = <BgnForm/>;
       var button = <button onClick = {this.increment} className="btn btn-primary submit">다음</button>;
+      var touch = <div></div>
+      var touch2 = <div></div>
     }
     if(this.state.count == 1){
       var element = <FstForm/>;
       var button = <button onClick = {this.increment} className="btn btn-primary submit">다음</button>;
+      var touch = <div></div>
+      var touch2 = <div></div>
     }
     if(this.state.count == 2){
       var element = <SecForm></SecForm>;
       var button  = <button onClick = {this.increment} className="btn btn-primary submit">다음</button>;
+      var touch = <div></div>
+      var touch2 = <div></div>
     }
     if(this.state.count==3){
       var element = <ThdForm></ThdForm>;
       var button  = <button onClick = {this.increment} className="btn btn-primary submit">다음</button>;
+      var touch = <div></div>
+      var touch2 = <div></div>
     }
     if(this.state.count==4){
       var element = <FthForm></FthForm>;
       var button  = <button onClick = {this.load(this.ekoPlayer, this.getCheckboxValue)} className="btn btn-primary submit">제출하기</button>;
+      var touch = <div></div>
+      var touch2 = <div></div>
     }
     // if(this.state.count == 5){
     //   var element = <LastForm></LastForm>
